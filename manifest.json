@@ -1,0 +1,17 @@
+{
+  "name": "Charlie's Cruise Countdown",
+  "short_name": "Cruise!",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#061a33",
+  "theme_color": "#061a33",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%23061a33'/><text x='256' y='350' text-anchor='middle' font-size='300'>🚢</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
