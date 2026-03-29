@@ -24,9 +24,10 @@ body.mode-sail{background:linear-gradient(160deg,#003311 0%,#005522 40%,#00a844 
   box-shadow:0 0 25px 8px rgba(255,220,50,.3),0 0 50px 20px rgba(255,200,50,.12);
   animation:sun-breathe 6s ease-in-out infinite;}
 @keyframes sun-breathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.04)}}
-.sun-ray{position:absolute;top:50%;left:50%;width:2.5px;height:22px;
-  background:linear-gradient(to top,rgba(255,215,0,.6),rgba(255,215,0,0));
+.sun-ray{position:absolute;top:50%;left:50%;width:2px;height:18px;
+  background:linear-gradient(to top,rgba(255,215,0,.5),rgba(255,215,0,0));
   border-radius:2px;transform-origin:center 0px;transform:translate(-50%,-50%) rotate(var(--r,0deg)) translateY(-32px);}
+.sun-ray.long{height:26px;width:2.5px;background:linear-gradient(to top,rgba(255,215,0,.6),rgba(255,215,0,0));}
 .sun-haze{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(255,240,150,.1),transparent 70%);}
 
 /* MOON */
@@ -48,8 +49,9 @@ body.mode-sail{background:linear-gradient(160deg,#003311 0%,#005522 40%,#00a844 
 .ship-wrap{position:fixed;bottom:22%;z-index:6;animation:sacross 28s linear infinite;filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));}
 @keyframes sacross{0%{left:-240px}100%{left:110%}}
 .ship-photo{width:200px;display:block;animation:sbob 3.5s ease-in-out infinite;filter:brightness(1.1) contrast(1.05) saturate(1.15);
-  mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 55%,transparent 85%);
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 15%,black 55%,transparent 85%);}
+  object-fit:cover;object-position:center 62%;height:80px;
+  mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);}
 @keyframes sbob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
 .ship-wake{position:absolute;bottom:18%;left:-10px;width:50%;height:6px;
   background:linear-gradient(90deg,rgba(255,255,255,.3),transparent);
@@ -167,18 +169,30 @@ body.mode-sail{background:linear-gradient(160deg,#003311 0%,#005522 40%,#00a844 
 <!-- Sun with rays -->
 <div class="sun" id="sun">
   <div class="sun-haze"></div>
-  <div class="sun-ray" style="--r:0deg"></div>
-  <div class="sun-ray" style="--r:30deg"></div>
-  <div class="sun-ray" style="--r:60deg"></div>
-  <div class="sun-ray" style="--r:90deg"></div>
-  <div class="sun-ray" style="--r:120deg"></div>
-  <div class="sun-ray" style="--r:150deg"></div>
-  <div class="sun-ray" style="--r:180deg"></div>
-  <div class="sun-ray" style="--r:210deg"></div>
-  <div class="sun-ray" style="--r:240deg"></div>
-  <div class="sun-ray" style="--r:270deg"></div>
-  <div class="sun-ray" style="--r:300deg"></div>
-  <div class="sun-ray" style="--r:330deg"></div>
+  <div class="sun-ray long" style="--r:0deg"></div>
+  <div class="sun-ray" style="--r:15deg"></div>
+  <div class="sun-ray long" style="--r:30deg"></div>
+  <div class="sun-ray" style="--r:45deg"></div>
+  <div class="sun-ray long" style="--r:60deg"></div>
+  <div class="sun-ray" style="--r:75deg"></div>
+  <div class="sun-ray long" style="--r:90deg"></div>
+  <div class="sun-ray" style="--r:105deg"></div>
+  <div class="sun-ray long" style="--r:120deg"></div>
+  <div class="sun-ray" style="--r:135deg"></div>
+  <div class="sun-ray long" style="--r:150deg"></div>
+  <div class="sun-ray" style="--r:165deg"></div>
+  <div class="sun-ray long" style="--r:180deg"></div>
+  <div class="sun-ray" style="--r:195deg"></div>
+  <div class="sun-ray long" style="--r:210deg"></div>
+  <div class="sun-ray" style="--r:225deg"></div>
+  <div class="sun-ray long" style="--r:240deg"></div>
+  <div class="sun-ray" style="--r:255deg"></div>
+  <div class="sun-ray long" style="--r:270deg"></div>
+  <div class="sun-ray" style="--r:285deg"></div>
+  <div class="sun-ray long" style="--r:300deg"></div>
+  <div class="sun-ray" style="--r:315deg"></div>
+  <div class="sun-ray long" style="--r:330deg"></div>
+  <div class="sun-ray" style="--r:345deg"></div>
   <div class="sun-core"></div>
 </div>
 <div class="moon" id="moon">🌙</div>
