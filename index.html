@@ -525,15 +525,8 @@ function showDayAlarm(daysLeft){
 
   // Browser notification
   if('Notification' in window && Notification.permission==='granted'){
-    const msgs=[
-      `${daysLeft} days until the Jubilee, Charlie! 🚢`,
-      `Only ${daysLeft} more days! The ocean is calling! 🌊`,
-      `${daysLeft} days to go! BOLT is waiting! 🎢`,
-      `Wake up Charlie! ${daysLeft} days until Galveston! ⚓`,
-      `${daysLeft} days! Start packing! 🧳🎉`,
-    ];
     new Notification("🚢 Cruise Countdown!",{
-      body:msgs[Math.floor(Math.random()*msgs.length)],
+      body:`Charlie Charlie Charlie! ${daysLeft} Days until GALVESTON!!!!`,
       tag:'daily-alarm',
       renotify:true
     });
