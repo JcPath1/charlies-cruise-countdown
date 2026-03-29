@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Charlie's Jubilee! 🚢</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sun:#ffd700; --sand:#ffe8a3; --red:#e63946; --pink:#ff85a1;
+  --purple:#9d4edd; --green:#06d6a0; --coral:#ff6b6b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  min-height:100vh; font-family:'Nunito',sans-serif;
+  overflow-x:hidden; position:relative;
+}
+body.mode-cruise{background:linear-gradient(180deg,#061a33 0%,#0d4f7a 45%,#00a8cc 75%,#5dc8e0 100%);}
+body.mode-birthday{background:linear-gradient(160deg,#1a0533 0%,#3d0066 30%,#7b00cc 60%,#cc00aa 100%);}
+body.mode-sail{background:linear-gradient(160deg,#003311 0%,#005522 40%,#00a844 80%,#00e060 100%);}
+
+/* STARS */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.star{position:absolute;background:white;border-radius:50%;animation:twinkle var(--d,2s) infinite alternate var(--dl,0s);}
+@keyframes twinkle{from{opacity:.1}to{opacity:1}}
+
+/* SUN */
+.sun{
+  position:fixed;top:45px;right:28px;width:66px;height:66px;
+  background:radial-gradient(circle,#fffde0,#ffd700);
+  border-radius:50%;
+  box-shadow:0 0 0 10px rgba(255,215,0,.15),0 0 0 22px rgba(255,215,0,.07);
+  animation:spulse 4s ease-in-out infinite;z-index:2;
+}
+@keyframes spulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.sun-ray{
+  position:absolute;top:50%;left:50%;
+  width:2px;height:20px;background:rgba(255,215,0,.6);
+  border-radius:2px;transform-origin:center -6px;
+  animation:rspin 9s linear infinite;
+}
+@keyframes rspin{from{transform:rotate(var(--r,0deg))}to{transform:rotate(calc(var(--r,0deg) + 360deg))}}
+
+/* MOON */
+.moon{
+  position:fixed;top:40px;right:28px;font-size:50px;
+  animation:mfloat 5s ease-in-out infinite;z-index:2;display:none;
+  filter:drop-shadow(0 0 18px rgba(255,200,255,.6));
+}
+@keyframes mfloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(5deg)}}
+
+/* SHIP */
+.ship-wrap{position:fixed;bottom:26%;z-index:6;animation:sacross 22s linear infinite;filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));}
+@keyframes sacross{0%{left:-180px}100%{left:110%}}
+.ship-e{font-size:68px;display:block;animation:sbob 2.5s ease-in-out infinite;}
+@keyframes sbob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+
+/* SEAGULLS */
+.gull{position:fixed;font-size:var(--gs,20px);z-index:3;animation:gfly var(--gd,14s) linear infinite var(--gdl,0s);top:var(--gt,14%);}
+@keyframes gfly{0%{left:-60px}100%{left:110%}}
+
+/* CLOUDS */
+.cloud{position:fixed;font-size:var(--cs,38px);z-index:1;opacity:.55;animation:cdrift var(--cd,32s) linear infinite var(--cdl,0s);top:var(--ct,7%);}
+@keyframes cdrift{0%{left:-120px}100%{left:110%}}
+
+/* HOT AIR BALLOON */
+.balloon{position:fixed;font-size:42px;z-index:3;animation:balloon-drift 40s linear infinite 5s;top:8%;left:-80px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2));}
+@keyframes balloon-drift{0%{left:-80px;transform:translateY(0)}25%{transform:translateY(-20px)}50%{transform:translateY(5px)}75%{transform:translateY(-15px)}100%{left:110%;transform:translateY(0)}}
+
+/* WAVES */
+.waves{position:fixed;bottom:0;left:0;width:100%;height:30%;pointer-events:none;z-index:4;}
+.wave{position:absolute;width:200%;bottom:0;left:-50%;}
+.wave svg{width:100%;height:100%;}
+.w1{animation:wm 7s linear infinite;opacity:.9;}
+.w2{animation:wm 11s linear infinite reverse;opacity:.55;bottom:8px;}
+.w3{animation:wm 15s linear infinite;opacity:.35;bottom:18px;}
+@keyframes wm{0%{transform:translateX(0)}100%{transform:translateX(25%)}}
+
+/* FISH */
+.fish{position:fixed;font-size:var(--fs,26px);z-index:3;animation:fswim var(--fd,13s) linear infinite var(--fdl,0s);bottom:var(--fb,7%);filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
+@keyframes fswim{
+  0%{left:-80px;transform:scaleX(1)}
+  49%{transform:scaleX(1)}50%{left:110%;transform:scaleX(-1)}
+  100%{left:-80px;transform:scaleX(-1)}
+}
+
+/* JUMPING DOLPHIN */
+.dolphin{position:fixed;font-size:36px;z-index:5;animation:djump 8s ease-in-out infinite var(--ddl,0s);bottom:22%;left:var(--dl,20%);}
+@keyframes djump{0%,100%{transform:translateY(0) rotate(0deg);opacity:0}10%{opacity:1}50%{transform:translateY(-80px) rotate(-30deg);opacity:1}90%{opacity:1}95%{opacity:0;transform:translateY(0) rotate(0deg)}}
+
+/* BUBBLES */
+.bubble{
+  position:fixed;border-radius:50%;
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);
+  animation:brise var(--bd,8s) ease-in infinite var(--bdl,0s);
+  bottom:-30px;left:var(--bl,50%);width:var(--bs,14px);height:var(--bs,14px);z-index:3;
+}
+@keyframes brise{0%{transform:translateY(0) scale(1);opacity:.6}100%{transform:translateY(-65vh) scale(1.4);opacity:0}}
+
+/* SHOOTING STARS */
+.shoot{position:fixed;width:3px;height:3px;background:white;border-radius:50%;animation:sgo var(--sd,3s) ease-in infinite var(--sdl,0s);top:var(--st,20%);left:var(--sl,10%);z-index:1;opacity:0;}
+.shoot::after{content:'';position:absolute;width:55px;height:1px;background:linear-gradient(90deg,white,transparent);right:2px;top:1px;}
+@keyframes sgo{0%{opacity:0;transform:translate(0,0)}5%{opacity:1}60%{opacity:0;transform:translate(200px,80px)}100%{opacity:0;transform:translate(200px,80px)}}
+
+/* CONFETTI */
+.conf{position:fixed;top:-20px;animation:cfall var(--cfd,7s) linear var(--cfdl,0s) infinite;z-index:-1;pointer-events:none;width:var(--cfw,9px);height:var(--cfh,13px);}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:.45}80%{opacity:.35}100%{transform:translateY(105vh) rotate(720deg) translateX(var(--cfx,0px));opacity:0}}
+
+/* BIRTHDAY PARTICLES */
+.bpt{position:fixed;font-size:var(--bps,20px);animation:bpfloat var(--bpd,6s) ease-in-out infinite var(--bpdl,0s);left:var(--bpl,50%);top:var(--bpt,50%);z-index:3;display:none;pointer-events:none;}
+@keyframes bpfloat{0%,100%{transform:translateY(0) rotate(0deg) scale(1);opacity:1}50%{transform:translateY(-45px) rotate(180deg) scale(1.2);opacity:.8}}
+
+/* ===== LAYOUT ===== */
+.page{position:relative;z-index:8;isolation:isolate;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 14px 180px;}
+
+/* HEADER */
+.hdr{text-align:center;margin-top:12px;margin-bottom:10px;}
+.hdr-icon{font-size:36px;display:block;animation:swing 2.2s ease-in-out infinite;transform-origin:top center;}
+@keyframes swing{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+.hdr-title{font-family:'Pacifico',cursive;font-size:clamp(1.8rem,7vw,2.7rem);color:#fff;text-shadow:3px 3px 0 var(--red),5px 5px 0 rgba(0,0,0,.2);line-height:1.05;}
+.hdr-sub{font-size:.75rem;color:var(--sand);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px;opacity:.9;}
+
+/* SAIL BADGE */
+.sail-badge{
+  background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.22);
+  border-radius:12px;padding:7px 16px;font-size:.78rem;font-weight:700;
+  color:var(--sand);letter-spacing:1px;margin-bottom:10px;text-align:center;
+  animation:float-box 4s ease-in-out infinite;
+}
+@keyframes float-box{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* COUNTDOWN ROW */
+.cdrow{display:flex;gap:7px;width:100%;max-width:330px;margin-bottom:10px;}
+.cbox{flex:1;background:rgba(20,80,140,.75);border:2px solid rgba(255,255,255,.22);border-radius:16px;padding:9px 3px 7px;text-align:center;position:relative;overflow:hidden;animation:float-box var(--fb,3s) ease-in-out infinite var(--fbd,0s);}
+.cbox::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,var(--sun));border-radius:16px 16px 0 0;}
+.cbox:nth-child(1){--acc:var(--red);--fb:3.1s;--fbd:0s}
+.cbox:nth-child(2){--acc:var(--sun);--fb:3.4s;--fbd:.3s}
+.cbox:nth-child(3){--acc:var(--green);--fb:3.2s;--fbd:.6s}
+.cbox:nth-child(4){--acc:var(--pink);--fb:3.5s;--fbd:.9s}
+.cbox-num{font-family:'Pacifico',cursive;font-size:clamp(1.7rem,6.5vw,2.2rem);color:white;line-height:1;text-shadow:1px 1px 0 rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+.cbox-num.bump{transform:scale(1.35)}
+.cbox-lbl{font-size:.55rem;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:1.5px;font-weight:900;margin-top:2px;}
+
+/* HYPE */
+.hype{background:linear-gradient(135deg,var(--red),var(--purple));border-radius:16px;padding:12px 14px;width:100%;max-width:330px;text-align:center;margin-bottom:10px;animation:gpulse 2.5s ease-in-out infinite;}
+@keyframes gpulse{0%,100%{box-shadow:0 6px 20px rgba(230,57,70,.3)}50%{box-shadow:0 6px 32px rgba(157,78,221,.5)}}
+.hype-e{font-size:1.5rem;display:block;margin-bottom:2px;}
+.hype-t{font-family:'Pacifico',cursive;color:white;font-size:.95rem;line-height:1.3;}
+
+/* FACT */
+.fact{background:rgba(20,80,140,.75);border:2px solid rgba(255,255,255,.17);border-radius:13px;padding:9px 13px;width:100%;max-width:330px;margin-bottom:10px;}
+.fact-lbl{font-size:.63rem;color:var(--sand);text-transform:uppercase;letter-spacing:2px;font-weight:700;text-align:center;margin-bottom:4px;}
+.fact-t{color:white;font-size:.85rem;font-weight:700;text-align:center;min-height:36px;display:flex;align-items:center;justify-content:center;line-height:1.4;animation:fin .4s ease;}
+@keyframes fin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* PORTS STRIP */
+.ports{display:flex;gap:6px;width:100%;max-width:330px;margin-bottom:0;}
+.port{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:7px 4px;text-align:center;}
+.port-e{font-size:1.2rem;display:block;margin-bottom:2px;}
+.port-t{font-size:.6rem;color:rgba(255,255,255,.85);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+
+/* ===== BIRTHDAY ===== */
+.bday-wrap{display:none;flex-direction:column;align-items:center;width:100%;max-width:330px;gap:12px;}
+.bday-wrap.show{display:flex;}
+.bday-crown{font-size:3.5rem;animation:cbounce .6s ease-in-out infinite alternate;}
+@keyframes cbounce{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-14px) rotate(8deg)}}
+.bday-title{font-family:'Pacifico',cursive;font-size:clamp(2rem,9vw,3rem);color:#fff;text-shadow:3px 3px 0 #cc00aa,5px 5px 0 rgba(0,0,0,.2);text-align:center;line-height:1.1;}
+.bday-cake{font-size:4.5rem;animation:cakespin 3s ease-in-out infinite;}
+@keyframes cakespin{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.1) rotate(3deg)}}
+.bday-sub{color:#ffb3f0;font-size:.95rem;font-weight:700;text-align:center;line-height:1.5;}
+.bday-note{background:rgba(255,255,255,.14);border-radius:14px;padding:13px 16px;text-align:center;color:white;font-weight:700;font-size:.88rem;line-height:1.6;border:2px solid rgba(255,255,255,.22);}
+.bday-note span{font-family:'Pacifico',cursive;color:#ffd700;font-size:1.05rem;}
+.bday-balloons{font-size:2.5rem;letter-spacing:8px;animation:bsway 1.5s ease-in-out infinite alternate;}
+@keyframes bsway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+
+/* ===== SAIL DAY ===== */
+.sail-wrap{display:none;flex-direction:column;align-items:center;width:100%;max-width:330px;gap:14px;}
+.sail-wrap.show{display:flex;}
+.sail-big{font-size:5rem;animation:sailbounce .5s ease-in-out infinite alternate;}
+@keyframes sailbounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+.sail-title{font-family:'Pacifico',cursive;font-size:clamp(2rem,9vw,3rem);color:#fff;text-shadow:3px 3px 0 #004d20,5px 5px 0 rgba(0,0,0,.2);text-align:center;line-height:1.1;}
+.sail-sub{color:#a0ffcc;font-size:.95rem;font-weight:700;text-align:center;line-height:1.6;}
+
+/* TOGGLE */
+.cc{display:flex;flex-direction:column;align-items:center;width:100%;}
+.cc.hide{display:none;}
+</style>
+</head>
+<body class="mode-cruise">
+
+<div class="stars" id="stars"></div>
+<div class="sun" id="sun">
+  <div class="sun-ray" style="--r:0deg"></div><div class="sun-ray" style="--r:45deg"></div>
+  <div class="sun-ray" style="--r:90deg"></div><div class="sun-ray" style="--r:135deg"></div>
+  <div class="sun-ray" style="--r:180deg"></div><div class="sun-ray" style="--r:225deg"></div>
+  <div class="sun-ray" style="--r:270deg"></div><div class="sun-ray" style="--r:315deg"></div>
+</div>
+<div class="moon" id="moon">🌙</div>
+
+<!-- Moving ship -->
+<div class="ship-wrap"><div class="ship-e">🚢</div></div>
+
+<!-- Seagulls -->
+<div class="gull" style="--gd:16s;--gdl:0s;--gt:13%;--gs:20px">🦅</div>
+<div class="gull" style="--gd:11s;--gdl:4s;--gt:19%;--gs:16px">🦅</div>
+<div class="gull" style="--gd:20s;--gdl:8s;--gt:9%;--gs:22px">🦅</div>
+<div class="gull" style="--gd:14s;--gdl:2s;--gt:24%;--gs:14px">🐦</div>
+<div class="gull" style="--gd:25s;--gdl:11s;--gt:16%;--gs:18px">🦅</div>
+
+<!-- Clouds -->
+<div class="cloud" style="--cd:36s;--cdl:0s;--ct:5%;--cs:34px">☁️</div>
+<div class="cloud" style="--cd:52s;--cdl:14s;--ct:3%;--cs:26px">⛅</div>
+<div class="cloud" style="--cd:44s;--cdl:6s;--ct:9%;--cs:30px">☁️</div>
+<div class="cloud" style="--cd:29s;--cdl:22s;--ct:1%;--cs:42px">⛅</div>
+
+<!-- Hot air balloon -->
+<div class="balloon">🎈</div>
+
+<!-- Waves -->
+<div class="waves">
+  <div class="wave w1"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" fill="rgba(0,80,120,0.75)"/></svg></div>
+  <div class="wave w2"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,40 C360,90 720,10 1080,50 C1260,70 1380,30 1440,40 L1440,120 L0,120 Z" fill="rgba(0,120,160,0.5)"/></svg></div>
+  <div class="wave w3"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,80 C180,40 360,100 540,70 C720,40 900,90 1080,65 C1260,40 1380,80 1440,70 L1440,120 L0,120 Z" fill="rgba(6,26,51,0.85)"/></svg></div>
+</div>
+
+<!-- Fish -->
+<div class="fish" style="--fd:15s;--fdl:0s;--fb:9%;--fs:28px">🐠</div>
+<div class="fish" style="--fd:10s;--fdl:5s;--fb:14%;--fs:20px">🐟</div>
+<div class="fish" style="--fd:20s;--fdl:2s;--fb:6%;--fs:30px">🐬</div>
+<div class="fish" style="--fd:13s;--fdl:8s;--fb:12%;--fs:18px">🐡</div>
+<div class="fish" style="--fd:18s;--fdl:3s;--fb:5%;--fs:22px">🦈</div>
+<div class="fish" style="--fd:22s;--fdl:11s;--fb:10%;--fs:16px">🐙</div>
+
+<!-- Jumping dolphins -->
+<div class="dolphin" style="--ddl:0s;--dl:15%">🐬</div>
+<div class="dolphin" style="--ddl:4s;--dl:60%">🐬</div>
+<div class="dolphin" style="--ddl:9s;--dl:38%">🐬</div>
+
+<!-- Confetti (behind everything) -->
+<div id="confetti"></div>
+<!-- Bubbles -->
+<div id="bubbles"></div>
+<!-- Shooting stars -->
+<div class="shoot" style="--sd:4s;--sdl:0s;--st:15%;--sl:5%"></div>
+<div class="shoot" style="--sd:6s;--sdl:3s;--st:25%;--sl:20%"></div>
+<div class="shoot" style="--sd:5s;--sdl:7s;--st:10%;--sl:55%"></div>
+<div class="shoot" style="--sd:7s;--sdl:11s;--st:18%;--sl:75%"></div>
+<!-- Birthday particles -->
+<div id="bpts"></div>
+
+<div class="page">
+  <div class="hdr">
+    <span class="hdr-icon" id="hdrIcon">🎡</span>
+    <h1 class="hdr-title" id="hdrTitle">Charlie's Jubilee!</h1>
+    <p class="hdr-sub" id="hdrSub">🚢 Carnival Jubilee · May 15 · Galveston TX 🚢</p>
+  </div>
+
+  <!-- CRUISE MODE -->
+  <div class="cc" id="cc">
+    <div class="sail-badge">⚓ Setting sail <strong>May 15, 2026</strong> from Galveston!</div>
+
+    <div class="cdrow">
+      <div class="cbox"><div class="cbox-num" id="days">--</div><div class="cbox-lbl">Days</div></div>
+      <div class="cbox"><div class="cbox-num" id="hours">--</div><div class="cbox-lbl">Hours</div></div>
+      <div class="cbox"><div class="cbox-num" id="minutes">--</div><div class="cbox-lbl">Mins</div></div>
+      <div class="cbox"><div class="cbox-num" id="seconds">--</div><div class="cbox-lbl">Secs</div></div>
+    </div>
+
+    <div class="hype">
+      <span class="hype-e" id="hypeE">🎢</span>
+      <div class="hype-t" id="hypeT">BOLT roller coaster is waiting for you, Charlie!</div>
+    </div>
+
+    <div class="fact">
+      <div class="fact-lbl">🐚 Jubilee Fun Fact</div>
+      <div class="fact-t" id="factT">Loading...</div>
+    </div>
+
+    <div class="ports">
+      <div class="port"><span class="port-e">🇲🇽</span><div class="port-t">Cozumel</div></div>
+      <div class="port"><span class="port-e">🇲🇽</span><div class="port-t">Costa Maya</div></div>
+      <div class="port"><span class="port-e">🇭🇳</span><div class="port-t">Roatan</div></div>
+      <div class="port"><span class="port-e">🎢</span><div class="port-t">BOLT!</div></div>
+    </div>
+  </div>
+
+  <!-- BIRTHDAY MODE -->
+  <div class="bday-wrap" id="bdayWrap">
+    <div class="bday-crown">👑</div>
+    <div class="bday-title">Happy Birthday<br>Charlie!!! 🎉</div>
+    <div class="bday-cake">🎂</div>
+    <div class="bday-balloons">🎈🎈🎈🎈🎈</div>
+    <div class="bday-sub">You're officially a year older<br>and a CRUISE closer!! 🥳🌊</div>
+    <div class="bday-note">
+      🚢 Only <span>6 more days</span> until you board the<br>
+      <span>Carnival Jubilee</span> in Galveston!<br>
+      Best. Birthday. Week. EVER. 🎡🌮🐬
+    </div>
+  </div>
+
+  <!-- SAIL DAY MODE -->
+  <div class="sail-wrap" id="sailWrap">
+    <div class="sail-big">🚢</div>
+    <div class="sail-title">IT'S<br>JUBILEE DAY!!!</div>
+    <div class="sail-sub">
+      ⚓ GET TO GALVESTON, CHARLIE! ⚓<br>
+      🎢 BOLT · 🌮 Tacos · 🐬 Dolphins · 🌴 Adventure<br>
+      ALL ABOARD!!! 🎉🎊
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATES =====
+const SAIL     = new Date('2026-05-15T06:00:00');
+const BDAY     = new Date('2026-05-09T00:00:00');
+const BDAY_END = new Date('2026-05-10T00:00:00');
+
+// ===== STARS =====
+const starsEl = document.getElementById('stars');
+for (let i=0;i<90;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=Math.random()*3+1;
+  s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*65}%;left:${Math.random()*100}%;--d:${1.5+Math.random()*3}s;--dl:${Math.random()*4}s`;
+  starsEl.appendChild(s);
+}
+
+// ===== BUBBLES =====
+const bubblesEl=document.getElementById('bubbles');
+for(let i=0;i<20;i++){
+  const b=document.createElement('div');b.className='bubble';
+  const sz=7+Math.random()*18;
+  b.style.cssText=`--bd:${5+Math.random()*10}s;--bdl:${Math.random()*9}s;--bl:${Math.random()*100}%;--bs:${sz}px`;
+  bubblesEl.appendChild(b);
+}
+
+// ===== CONFETTI =====
+const cc=['#ffd700','#ff6b6b','#00c4e8','#06d6a0','#ff85a1','#9d4edd','#fff','#ff9500','#00e5ff'];
+const cEl=document.getElementById('confetti');
+for(let i=0;i<45;i++){
+  const c=document.createElement('div');c.className='conf';
+  const w=5+Math.random()*9,h=9+Math.random()*12,xd=(Math.random()-.5)*130;
+  c.style.cssText=`left:${Math.random()*100}%;background:${cc[~~(Math.random()*cc.length)]};--cfd:${4+Math.random()*8}s;--cfdl:${Math.random()*9}s;--cfw:${w}px;--cfh:${h}px;--cfx:${xd}px;border-radius:${Math.random()>.5?'50%':'3px'}`;
+  cEl.appendChild(c);
+}
+
+// ===== BIRTHDAY PARTICLES =====
+const bpEmojis=['🎈','🎉','✨','🌟','💜','🎀','🎁','⭐','🎊','💫','🌸','🦋','🎂','👑','🥳'];
+const bpEl=document.getElementById('bpts');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');p.className='bpt';
+  const sz=16+Math.random()*26;
+  p.style.cssText=`--bps:${sz}px;--bpd:${3+Math.random()*5}s;--bpdl:${Math.random()*5}s;--bpl:${Math.random()*90}%;--bpt:${Math.random()*80}%`;
+  p.textContent=bpEmojis[~~(Math.random()*bpEmojis.length)];
+  bpEl.appendChild(p);
+}
+
+// ===== CONTENT =====
+const facts=[
+  "🎢 BOLT is a real roller coaster that launches off the TOP of the ship!",
+  "🌊 The Jubilee weighs 182,000 gross tons — one of Earth's largest ships!",
+  "🐬 Cozumel, Mexico — world-class snorkeling right off the pier!",
+  "🎭 6 themed 'zones' on board — a whole new world around every corner!",
+  "🍔 Guy Fieri's Burger Joint is on board. Yes, THAT Guy Fieri. 🔥",
+  "🏰 A 3-story atrium transforms into an entertainment venue every night!",
+  "🌮 Costa Maya — turquoise water & incredible street tacos await!",
+  "🎪 Family Feud LIVE is an actual show on the Jubilee. Buzz in!",
+  "🎬 Giant movie screen by the pool — Dive-In Movies under the stars!",
+  "🌴 Roatan, Honduras — jungle zip lines right over the Caribbean!",
+  "🏊 Deck 18 Ultimate Playground: ropes course + waterslides + minigolf!",
+  "🚀 NASA Space Cruisers program — real space-themed activities on board!",
+  "🍕 Pizza delivered anywhere on the ship, day or night — $5 delivery!",
+  "🎶 Broadway shows nightly — Celestial Strings, Soulbound, Vintage Pop!",
+  "⚡ The Jubilee runs on LNG — one of Carnival's cleanest ships ever!",
+];
+const hypers=[
+  {e:'🎢',t:'BOLT roller coaster is waiting for you, Charlie!'},
+  {e:'🌊',t:'Galveston, TX — your adventure starts HERE!'},
+  {e:'🌮',t:'Cozumel tacos & turquoise water incoming!'},
+  {e:'🎡',t:'6 zones of fun — which zone first?!'},
+  {e:'🍔',t:"Guy Fieri's Burger Joint... need we say more?"},
+  {e:'🌴',t:'Roatan jungle zip lines are calling your name!'},
+  {e:'🎉',t:'The Jubilee is ONE. BIG. PARTY. 🥳'},
+  {e:'⚓',t:'Largest Carnival ship from Galveston — only the best!'},
+  {e:'🎬',t:'Dive-In Movies under the stars by the pool!'},
+];
+let fi=0,hi=0;
+function updateFact(){
+  const el=document.getElementById('factT');
+  el.style.animation='none';el.offsetHeight;el.style.animation='';
+  el.textContent=facts[fi++%facts.length];
+}
+function updateHype(){
+  hi=(hi+1)%hypers.length;
+  document.getElementById('hypeE').textContent=hypers[hi].e;
+  document.getElementById('hypeT').textContent=hypers[hi].t;
+}
+updateFact();
+setInterval(updateFact,7000);
+setInterval(updateHype,4000);
+
+// ===== BUMP =====
+const prev={};
+function bump(id){
+  const el=document.getElementById(id);
+  el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');
+  setTimeout(()=>el.classList.remove('bump'),300);
+}
+
+// ===== MODE SWITCH =====
+function setMode(m){
+  document.body.className='mode-'+m;
+  const cc=document.getElementById('cc');
+  const bw=document.getElementById('bdayWrap');
+  const sw=document.getElementById('sailWrap');
+  const moon=document.getElementById('moon');
+  const sun=document.getElementById('sun');
+  const bpts=document.querySelectorAll('.bpt');
+  const icon=document.getElementById('hdrIcon');
+  const title=document.getElementById('hdrTitle');
+  const sub=document.getElementById('hdrSub');
+
+  cc.classList.add('hide');
+  bw.classList.remove('show');
+  sw.classList.remove('show');
+  moon.style.display='none';
+  sun.style.display='block';
+  bpts.forEach(p=>p.style.display='none');
+
+  if(m==='birthday'){
+    bw.classList.add('show');
+    moon.style.display='block';
+    sun.style.display='none';
+    bpts.forEach(p=>p.style.display='block');
+    icon.textContent='🎂';
+    title.textContent="Happy Birthday Charlie!!!";
+    sub.textContent='🎈 May 9th — Queen for a Day! 🎈';
+  } else if(m==='sail'){
+    sw.classList.add('show');
+    icon.textContent='⚓';
+    title.textContent="Charlie's Jubilee!";
+    sub.textContent='🚢 ALL ABOARD · Galveston TX 🚢';
+  } else {
+    cc.classList.remove('hide');
+    icon.textContent='🎡';
+    title.textContent="Charlie's Jubilee!";
+    sub.textContent='🚢 Carnival Jubilee · May 15 · Galveston TX 🚢';
+  }
+}
+
+// ===== TICK =====
+function tick(){
+  const now=new Date();
+  if(now>=BDAY&&now<BDAY_END){setMode('birthday');return;}
+  if(now>=SAIL){setMode('sail');return;}
+  setMode('cruise');
+  const diff=SAIL-now;
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const mn=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  const vals={days:d,hours:h,minutes:mn,seconds:s};
+  for(const[k,v] of Object.entries(vals)){
+    if(prev[k]!==v){
+      document.getElementById(k).textContent=String(v).padStart(2,'0');
+      bump(k);prev[k]=v;
+    }
+  }
+}
+setInterval(tick,1000);
+tick();
+</script>
+</body>
+</html>
